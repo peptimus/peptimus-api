@@ -16,27 +16,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Generate GitHub App token
-        id: app-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ vars.PEPTIMUS_APP_ID }}
-          private-key: ${{ secrets.PEPTIMUS_APP_PRIVATE_KEY }}
-
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ steps.app-token.outputs.token }}
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
 
       - name: Validate package.json
         run: node -e "JSON.parse(require('fs').readFileSync('package.json','utf8')); console.log('package.json valid')"
@@ -51,9 +32,11 @@ jobs:
           [ -f "src/app.ts" ] && echo "src/app.ts present" || (echo "src/app.ts missing" && exit 1)
           [ -f "build.mjs" ] && echo "build.mjs present" || (echo "build.mjs missing" && exit 1)
 
-      - name: Check no Replit artifacts
+      - name: Check for forbidden platform references
         run: |
-          if grep -rI "@replit\|REPL_ID\|REPLIT" --include="*.ts" --include="*.js" --include="*.json" --exclude-dir=".github" . 2>/dev/null; then
-            echo "Replit artifacts found" && exit 1
+          if grep -rI "@replit\|REPL_ID\|REPLIT_DOMAINS\|REPLIT_DEV_DOMAIN" \
+            --include="*.ts" --include="*.js" --include="*.json" \
+            --exclude-dir=".github" . 2>/dev/null; then
+            echo "Forbidden platform references found" && exit 1
           fi
-          echo "Clean - no Replit artifacts"
+          echo "Clean"
