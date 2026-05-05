@@ -139,7 +139,7 @@ async function mintPeptideNFT(peptideId: string, walletAddress: string): Promise
     const leafIndex = Number(treeConfig.numMinted);
     const [assetId] = findLeafAssetIdPda(umi, { merkleTree, leafIndex });
 
-    const domains = process.env.REPLIT_DOMAINS ?? process.env.REPLIT_DEV_DOMAIN ?? "localhost";
+    const domains = process.env.APP_DOMAIN ?? process.env.HOST ?? "localhost";
     const apiDomain = domains.split(",")[0].trim();
     const metadataUri = `https://${apiDomain}/api/peptides/${peptideId}/metadata`;
 

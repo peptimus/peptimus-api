@@ -420,7 +420,7 @@ peptidesRouter.get("/peptides/:id/metadata", async (req, res) => {
     const [peptide] = await db.select().from(peptidesTable).where(eq(peptidesTable.id, req.params.id));
     if (!peptide) return res.status(404).json({ error: "Not found" });
 
-    const domains = process.env.REPLIT_DOMAINS ?? process.env.REPLIT_DEV_DOMAIN ?? "localhost";
+    const domains = process.env.APP_DOMAIN ?? process.env.HOST ?? "localhost";
     const apiDomain = domains.split(",")[0].trim();
     const base = `https://${apiDomain}`;
     const publicBase = "https://peptimus.xyz";
@@ -527,7 +527,7 @@ peptidesRouter.get("/peptides/:id/agreement", async (req, res) => {
 
     const ipnft = peptide.ipnftMeta as IpnftMeta | null;
     const contentHash = createHash("sha256").update(peptide.sequence + peptide.id).digest("hex");
-    const domains = process.env.REPLIT_DOMAINS ?? process.env.REPLIT_DEV_DOMAIN ?? "localhost";
+    const domains = process.env.APP_DOMAIN ?? process.env.HOST ?? "localhost";
     const apiDomain = domains.split(",")[0].trim();
 
     res.json({

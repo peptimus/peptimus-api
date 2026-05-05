@@ -62,14 +62,14 @@ mintRouter.post("/peptides/:id/mint-server", async (req, res) => {
     const MERKLE_TREE_ADDRESS = process.env.MERKLE_TREE_ADDRESS;
     if (!MERKLE_TREE_ADDRESS) {
       return res.status(503).json({
-        error: "Merkle tree not initialised. Run: node artifacts/api-server/scripts/create-tree.mjs",
+        error: "Merkle tree not initialised. Run: node scripts/create-tree.mjs",
       });
     }
 
     const umi = createUmi(MAINNET_RPC).use(mplBubblegum());
     umi.use(keypairIdentity(getPlatformKeypair(umi)));
 
-    const domains = process.env.REPLIT_DOMAINS ?? process.env.REPLIT_DEV_DOMAIN ?? "localhost";
+    const domains = process.env.APP_DOMAIN ?? process.env.HOST ?? "localhost";
     const apiDomain = domains.split(",")[0].trim();
     const metadataUri = `https://${apiDomain}/api/peptides/${peptide.id}/metadata`;
 
