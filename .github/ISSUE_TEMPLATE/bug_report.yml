@@ -1,0 +1,41 @@
+name: Bug Report
+description: Report a bug in the Peptimus API server
+title: "[bug] "
+labels: ["bug", "triage", "backend"]
+assignees:
+  - peptimusdev
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      placeholder: What happened with the API?
+    validations:
+      required: true
+  - type: textarea
+    id: route
+    attributes:
+      label: Affected Route
+      placeholder: "e.g. POST /api/peptides/design"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Send request to ...
+        2. With body ...
+        3. Get unexpected response ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Server Logs or Response Body

@@ -1,0 +1,25 @@
+name: Feature Request
+description: Suggest a new API feature or route for Peptimus
+title: "[feat] "
+labels: ["enhancement", "backend"]
+assignees:
+  - peptimusdev
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Motivation
+      placeholder: What is missing from the API?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      placeholder: Describe the route or feature you want added.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
